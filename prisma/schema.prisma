@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  image     String?
+  bio       String?
+  website   String?
+  twitter   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+  comments  Comment[]
+  upvotes   Upvote[]
+}
+
+model Product {
+  id           String              @id @default(cuid())
+  name         String
+  tagline      String
+  description  String
+  websiteUrl   String
+  thumbnailUrl String
+  galleryUrls  String[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  launchDate   DateTime?
+  featured     Boolean             @default(false)
+  userId       String
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories   CategoryOnProduct[]
+  comments     Comment[]
+  upvotes      Upvote[]
+
+  @@index([userId])
+}
+
+model Category {
+  id          String              @id @default(cuid())
+  name        String              @unique
+  description String?
+  iconUrl     String?
+  products    CategoryOnProduct[]
+}
+
+model CategoryOnProduct {
+  productId  String
+  categoryId String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([productId])
+  @@index([categoryId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([productId])
+}
+
+model Upvote {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
