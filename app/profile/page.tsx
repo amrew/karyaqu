@@ -1,10 +1,25 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowUp, Calendar, Edit, ExternalLink } from "lucide-react"
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUp, Calendar, Edit, ExternalLink } from "lucide-react";
+
+interface Product {
+  id: string;
+  name: string;
+  thumbnailUrl: string | null;
+  user: {
+    id: string;
+    name: string;
+    image: string | null;
+  };
+  upvotes: number;
+  tagline: string;
+  categories: string[];
+  launchDate: string;
+}
 
 // Mock user data
 const user = {
@@ -55,7 +70,7 @@ const user = {
       categories: ["Fintech", "Mobile"],
     },
   ],
-}
+};
 
 export default function ProfilePage() {
   return (
@@ -65,11 +80,20 @@ export default function ProfilePage() {
         <div className="space-y-6">
           <div className="text-center">
             <div className="relative mx-auto h-32 w-32 overflow-hidden rounded-full">
-              <Image src={user.image || "/placeholder.svg"} alt={user.name} fill className="object-cover" />
+              <Image
+                src={user.image || "/placeholder.svg"}
+                alt={user.name}
+                fill
+                className="object-cover"
+              />
             </div>
             <h1 className="mt-4 text-2xl font-bold">{user.name}</h1>
             <p className="text-sm text-muted-foreground">
-              Member since {new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+              Member since{" "}
+              {new Date(user.createdAt).toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })}
             </p>
           </div>
 
@@ -128,14 +152,30 @@ export default function ProfilePage() {
         <div className="lg:col-span-3 space-y-6">
           <Tabs defaultValue="products">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="products">Products ({user.products.length})</TabsTrigger>
-              <TabsTrigger value="upvoted">Upvoted ({user.upvoted.length})</TabsTrigger>
+              <TabsTrigger value="products">
+                Products ({user.products.length})
+              </TabsTrigger>
+              <TabsTrigger value="upvoted">
+                Upvoted ({user.upvoted.length})
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="products" className="pt-6">
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {user.products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      thumbnailUrl: product.thumbnailUrl,
+                      user: user,
+                      upvotes: product.upvotes,
+                      tagline: product.tagline,
+                      categories: product.categories,
+                      launchDate: product.launchDate,
+                    }}
+                  />
                 ))}
               </div>
             </TabsContent>
@@ -143,7 +183,19 @@ export default function ProfilePage() {
             <TabsContent value="upvoted" className="pt-6">
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {user.upvoted.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      thumbnailUrl: product.thumbnailUrl,
+                      user: user,
+                      upvotes: product.upvotes,
+                      tagline: product.tagline,
+                      categories: product.categories,
+                      launchDate: product.launchDate,
+                    }}
+                  />
                 ))}
               </div>
             </TabsContent>
@@ -151,10 +203,10 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="overflow-hidden group">
       <Link href={`/products/${product.id}`} className="block">
@@ -171,7 +223,9 @@ function ProductCard({ product }) {
         <div className="space-y-2">
           <div className="flex items-start justify-between">
             <Link href={`/products/${product.id}`} className="block">
-              <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{product.name}</h3>
+              <h3 className="font-bold text-lg group-hover:text-primary transition-colors">
+                {product.name}
+              </h3>
             </Link>
             <div className="flex items-center gap-1 text-sm">
               <ArrowUp className="h-3 w-3" />
@@ -188,11 +242,13 @@ function ProductCard({ product }) {
           </div>
           <div className="flex items-center text-xs text-muted-foreground pt-2">
             <Calendar className="h-3 w-3 mr-1" />
-            {new Date(product.launchDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+            {new Date(product.launchDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

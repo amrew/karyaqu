@@ -1,11 +1,17 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowUp, Calendar, ExternalLink, MessageSquare, Share2 } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  ArrowUp,
+  Calendar,
+  ExternalLink,
+  MessageSquare,
+  Share2,
+} from "lucide-react";
 
 // Mock product data
 const product = {
@@ -33,7 +39,8 @@ const product = {
   comments: [
     {
       id: "c1",
-      content: "This is amazing! I've been looking for something like this for my fashion line.",
+      content:
+        "This is amazing! I've been looking for something like this for my fashion line.",
       createdAt: "2023-12-15T10:30:00Z",
       user: {
         id: "u2",
@@ -43,7 +50,8 @@ const product = {
     },
     {
       id: "c2",
-      content: "How does this preserve the cultural significance of traditional batik patterns?",
+      content:
+        "How does this preserve the cultural significance of traditional batik patterns?",
       createdAt: "2023-12-15T11:45:00Z",
       user: {
         id: "u3",
@@ -53,7 +61,8 @@ const product = {
     },
     {
       id: "c3",
-      content: "Just tried the demo and the results are stunning! Can't wait to use this for my next project.",
+      content:
+        "Just tried the demo and the results are stunning! Can't wait to use this for my next project.",
       createdAt: "2023-12-16T09:15:00Z",
       user: {
         id: "u4",
@@ -62,9 +71,9 @@ const product = {
       },
     },
   ],
-}
+};
 
-export default function ProductPage({ params }) {
+export default function ProductPage() {
   return (
     <div className="container py-8">
       <div className="grid gap-8 lg:grid-cols-3">
@@ -73,11 +82,17 @@ export default function ProductPage({ params }) {
           {/* Hero section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="/"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Home
               </Link>
               <span className="text-muted-foreground">/</span>
-              <Link href="/categories/ai" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="/categories/ai"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 AI
               </Link>
             </div>
@@ -85,9 +100,15 @@ export default function ProductPage({ params }) {
             <div className="flex items-start justify-between">
               <div>
                 <h1 className="text-3xl font-bold">{product.name}</h1>
-                <p className="text-xl text-muted-foreground">{product.tagline}</p>
+                <p className="text-xl text-muted-foreground">
+                  {product.tagline}
+                </p>
               </div>
-              <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full h-10 w-10"
+              >
                 <ArrowUp className="h-5 w-5" />
                 <span className="sr-only">Upvote</span>
               </Button>
@@ -95,7 +116,11 @@ export default function ProductPage({ params }) {
 
             <div className="flex flex-wrap gap-2">
               {product.categories.map((category) => (
-                <Badge key={category} variant="secondary" className="font-normal">
+                <Badge
+                  key={category}
+                  variant="secondary"
+                  className="font-normal"
+                >
                   {category}
                 </Badge>
               ))}
@@ -104,7 +129,12 @@ export default function ProductPage({ params }) {
 
           {/* Product image */}
           <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
-            <Image src={product.thumbnailUrl || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+            <Image
+              src={product.thumbnailUrl || "/placeholder.svg"}
+              alt={product.name}
+              fill
+              className="object-cover"
+            />
           </div>
 
           {/* Product details */}
@@ -112,7 +142,9 @@ export default function ProductPage({ params }) {
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="about">About</TabsTrigger>
               <TabsTrigger value="gallery">Gallery</TabsTrigger>
-              <TabsTrigger value="comments">Comments ({product.comments.length})</TabsTrigger>
+              <TabsTrigger value="comments">
+                Comments ({product.comments.length})
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="about" className="space-y-6 pt-4">
@@ -131,7 +163,10 @@ export default function ProductPage({ params }) {
             <TabsContent value="gallery" className="pt-4">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {product.galleryUrls.map((url, i) => (
-                  <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
+                  <div
+                    key={i}
+                    className="relative aspect-square overflow-hidden rounded-lg"
+                  >
                     <Image
                       src={url || "/placeholder.svg"}
                       alt={`${product.name} gallery image ${i + 1}`}
@@ -148,18 +183,28 @@ export default function ProductPage({ params }) {
                 <Card key={comment.id}>
                   <CardHeader className="p-4 pb-2 flex flex-row items-start gap-4">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={comment.user.image} alt={comment.user.name} />
-                      <AvatarFallback>{comment.user.name.charAt(0)}</AvatarFallback>
+                      <AvatarImage
+                        src={comment.user.image}
+                        alt={comment.user.name}
+                      />
+                      <AvatarFallback>
+                        {comment.user.name.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-sm">{comment.user.name}</span>
+                        <span className="font-medium text-sm">
+                          {comment.user.name}
+                        </span>
                         <span className="text-xs text-muted-foreground">
-                          {new Date(comment.createdAt).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
+                          {new Date(comment.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
                         </span>
                       </div>
                     </div>
@@ -203,7 +248,11 @@ export default function ProductPage({ params }) {
               </div>
 
               <Button className="w-full" asChild>
-                <a href={product.websiteUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={product.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Visit Website
                 </a>
@@ -229,12 +278,17 @@ export default function ProductPage({ params }) {
             <CardContent className="p-4 pt-0">
               <div className="flex items-center gap-3">
                 <Avatar>
-                  <AvatarImage src={product.user.image} alt={product.user.name} />
+                  <AvatarImage
+                    src={product.user.image}
+                    alt={product.user.name}
+                  />
                   <AvatarFallback>{product.user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
                   <h4 className="font-medium">{product.user.name}</h4>
-                  <p className="text-xs text-muted-foreground">{product.user.bio}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {product.user.bio}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -257,7 +311,9 @@ export default function ProductPage({ params }) {
                   </div>
                   <div>
                     <h4 className="text-sm font-medium">Related Product {i}</h4>
-                    <p className="text-xs text-muted-foreground">Short description</p>
+                    <p className="text-xs text-muted-foreground">
+                      Short description
+                    </p>
                   </div>
                 </div>
               ))}
@@ -266,6 +322,5 @@ export default function ProductPage({ params }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

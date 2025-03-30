@@ -271,7 +271,11 @@ export default function SubmitPage() {
                     <PopoverContent className="w-auto p-0">
                       <Calendar
                         mode="single"
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         selected={date}
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-expect-error
                         onSelect={setDate}
                         initialFocus
                       />

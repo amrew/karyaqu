@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 
 // Mock data for demonstration
@@ -32,7 +32,7 @@ const mockProducts = [
   // Add more mock products as needed
 ];
 
-export default function SearchPage() {
+function SearchView() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [sortBy, setSortBy] = useState("newest");
@@ -131,5 +131,13 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense>
+      <SearchView />
+    </Suspense>
   );
 }
