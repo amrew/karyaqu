@@ -106,7 +106,7 @@ export default function Home() {
           Karyaqu is where makers and creators showcase their products and get
           feedback from the Indonesian tech community.
         </p>
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-col md:flex-row justify-center gap-4">
           <Button size="lg" asChild>
             <Link href="/submit">Submit Your Product</Link>
           </Button>
@@ -147,7 +147,7 @@ export default function Home() {
       {/* Product listings */}
       <section className="py-8">
         <Tabs defaultValue="today" className="w-full">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Products</h2>
             <TabsList>
               <TabsTrigger value="today">Today</TabsTrigger>
