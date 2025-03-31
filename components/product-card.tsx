@@ -42,14 +42,21 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardHeader className="p-4 pb-0">
         <div className="flex items-start justify-between">
           <Link href={`/products/${product.id}`} className="block">
-            <h3 className="font-bold text-lg group-hover:text-primary transition-colors">
+            <h3 className="font-bold text-lg hover:text-primary transition-colors">
               {product.name}
             </h3>
           </Link>
-          <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-            <ArrowUp className="h-4 w-4" />
-            <span className="sr-only">Upvote</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full h-8 w-8"
+            >
+              <ArrowUp className="h-4 w-4" />
+              <span className="sr-only">Upvote</span>
+            </Button>
+            <span className="text-xs font-medium">{product.upvotes}</span>
+          </div>
         </div>
         <p className="text-sm text-muted-foreground">{product.tagline}</p>
       </CardHeader>
@@ -77,7 +84,6 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium">{product.upvotes}</span>
           <div className="flex items-center text-xs text-muted-foreground">
             <Calendar className="h-3 w-3 mr-1" />
             {new Date(product.launchDate).toLocaleDateString("en-US", {

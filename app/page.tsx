@@ -2,6 +2,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductCard } from "@/components/product-card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 // Mock data for products
 const products = [
@@ -124,23 +131,41 @@ export default function Home() {
             <Link href="/categories">View All</Link>
           </Button>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {["AI", "Fintech", "E-commerce", "SaaS", "Mobile", "Education"].map(
-            (category) => (
-              <Link
-                key={category}
-                href={`/categories/${category.toLowerCase()}`}
-                className="flex flex-col items-center justify-center p-4 rounded-lg border bg-card hover:bg-accent/10 transition-colors"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-2">
-                  <span className="text-primary font-bold">
-                    {category.charAt(0)}
-                  </span>
-                </div>
-                <span className="text-sm font-medium">{category}</span>
-              </Link>
-            )
-          )}
+        <div className="relative px-8">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+          >
+            <CarouselContent>
+              {[
+                "AI",
+                "Fintech",
+                "E-commerce",
+                "SaaS",
+                "Mobile",
+                "Education",
+              ].map((category) => (
+                <CarouselItem
+                  key={category}
+                  className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+                >
+                  <div className="flex flex-col items-center justify-center p-4 rounded-lg border bg-card hover:bg-accent/10 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-2">
+                      <span className="text-primary font-bold">
+                        {category.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium line-clamp-1">
+                      {category}
+                    </span>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 
@@ -158,7 +183,7 @@ export default function Home() {
           </div>
 
           <TabsContent value="today" className="mt-0">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -166,7 +191,7 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="week" className="mt-0">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products
                 .slice()
                 .reverse()
@@ -177,7 +202,7 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="month" className="mt-0">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {[...products]
                 .sort(() => Math.random() - 0.5)
                 .map((product) => (
