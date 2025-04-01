@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,7 +7,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUp, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 
 interface ProductCardProps {
   product: {
@@ -46,17 +45,6 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
           </Link>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full h-8 w-8"
-            >
-              <ArrowUp className="h-4 w-4" />
-              <span className="sr-only">Upvote</span>
-            </Button>
-            <span className="text-xs font-medium">{product.upvotes}</span>
-          </div>
         </div>
         <p className="text-sm text-muted-foreground">{product.tagline}</p>
       </CardHeader>

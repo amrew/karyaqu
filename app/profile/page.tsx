@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUp, Calendar, Edit, ExternalLink } from "lucide-react";
+import { Calendar, Edit, ExternalLink } from "lucide-react";
 
 interface Product {
   id: string;
@@ -227,10 +227,6 @@ function ProductCard({ product }: { product: Product }) {
                 {product.name}
               </h3>
             </Link>
-            <div className="flex items-center gap-1 text-sm">
-              <ArrowUp className="h-3 w-3" />
-              <span>{product.upvotes}</span>
-            </div>
           </div>
           <p className="text-sm text-muted-foreground">{product.tagline}</p>
           <div className="flex flex-wrap gap-2 pt-2">

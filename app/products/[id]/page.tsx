@@ -5,13 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ArrowUp,
-  Calendar,
-  ExternalLink,
-  MessageSquare,
-  Share2,
-} from "lucide-react";
+import { Calendar, ExternalLink, MessageSquare, Share2 } from "lucide-react";
+import { CommentForm } from "@/components/comment-form";
 
 // Mock product data
 const product = {
@@ -21,11 +16,12 @@ const product = {
   description:
     "Batik AI uses advanced machine learning algorithms to generate unique batik patterns inspired by traditional Indonesian designs. Our technology preserves cultural heritage while enabling new creative possibilities for designers, fashion brands, and art enthusiasts.\n\nWith Batik AI, you can generate unlimited patterns, customize colors and motifs, and export high-resolution files for printing or digital use. We also offer an API for developers who want to integrate our technology into their own applications.",
   websiteUrl: "https://batik-ai.com",
-  thumbnailUrl: "/placeholder.svg?height=600&width=1200",
+  thumbnailUrl:
+    "https://images.unsplash.com/photo-1604973104381-870c92f10343?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   galleryUrls: [
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
+    "https://images.unsplash.com/photo-1604973104381-870c92f10343?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1543874911-320748e4c335?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1632198007630-64a196aceeca?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ],
   launchDate: "2023-12-15",
   upvotes: 128,
@@ -104,14 +100,6 @@ export default function ProductPage() {
                   {product.tagline}
                 </p>
               </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full h-10 w-10"
-              >
-                <ArrowUp className="h-5 w-5" />
-                <span className="sr-only">Upvote</span>
-              </Button>
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -179,6 +167,18 @@ export default function ProductPage() {
             </TabsContent>
 
             <TabsContent value="comments" className="space-y-4 pt-4">
+              <CommentForm
+                isAuthenticated={true} // TODO: Replace with actual auth state
+                user={{
+                  name: "Guest User",
+                  image: "/placeholder.svg",
+                }}
+                onSubmit={async (content) => {
+                  "use server";
+                  // TODO: Implement comment submission
+                  console.log("Submitting comment:", content);
+                }}
+              />
               {product.comments.map((comment) => (
                 <Card key={comment.id}>
                   <CardHeader className="p-4 pb-2 flex flex-row items-start gap-4">
@@ -236,14 +236,6 @@ export default function ProductPage() {
                       year: "numeric",
                     })}
                   </span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Upvotes</span>
-                <div className="flex items-center">
-                  <ArrowUp className="h-3 w-3 mr-1" />
-                  <span className="text-sm">{product.upvotes}</span>
                 </div>
               </div>
 

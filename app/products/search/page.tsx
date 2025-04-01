@@ -92,7 +92,6 @@ function SearchView() {
               <SelectContent>
                 <SelectItem value="newest">Newest First</SelectItem>
                 <SelectItem value="popular">Most Popular</SelectItem>
-                <SelectItem value="upvotes">Most Upvotes</SelectItem>
                 <SelectItem value="comments">Most Comments</SelectItem>
               </SelectContent>
             </Select>
